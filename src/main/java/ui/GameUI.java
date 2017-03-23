@@ -29,7 +29,6 @@ import main.java.constants.GameType;
 import main.java.event.Event;
 import main.java.event.arguments.GameCreatedEventArgs;
 import main.java.event.arguments.LobbyChangedEventArgs;
-import main.java.event.listener.CountDownStartingListener;
 import main.java.event.listener.GameClosingListener;
 import main.java.event.listener.GameCreatedListener;
 import main.java.event.listener.GameEndedListener;
@@ -40,7 +39,6 @@ import main.java.gamelogic.core.Lobby;
 import main.java.gamelogic.domain.Game;
 import main.java.graphics.PositionVisualisation;
 import main.java.graphics.Render;
-import main.java.networking.data.Packet;
 import main.java.networking.integration.ClientInstance;
 import main.java.networking.integration.ServerInstance;
 

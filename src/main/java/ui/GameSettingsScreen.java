@@ -1,6 +1,5 @@
 package main.java.ui;
 
-import javafx.collections.FXCollections;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
