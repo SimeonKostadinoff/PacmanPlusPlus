@@ -35,15 +35,6 @@ public class PlayersList {
 		pane.setAlignment(Pos.TOP_CENTER);
 
 		playerLabels = new HashMap<>();
-
-		/*
-		 * Collection<Player> players = game.getGame().getWorld().getPlayers();
-		 *
-		 * Iterator<Player> it = players.iterator();
-		 *
-		 * while(it.hasNext()){ Label name = new Label(it.next().getName());
-		 * name.setStyle(labelStyle); pane.getChildren().add(name); }
-		 */
 	}
 
 	public void addPlayer(final LobbyPlayerInfo player) {

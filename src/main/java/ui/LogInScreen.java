@@ -47,19 +47,9 @@ public class LogInScreen extends Screen {
 
 	private void switchScreen(final String username) {
 		if (!username.isEmpty()) {
-			// if(checkname(username)){
 			game.setName(username);
 			userLogIn.fire(new UserLoggedInEventArgs(username));
 			game.switchToMenu();
-			// }else{
-			// Alert alert = new Alert(AlertType.ERROR);
-			// alert.setTitle("Username Issue");
-			// alert.setHeaderText("The username you have entered is already
-			// being used");
-			// alert.setContentText("Please enter a new username");
-			//
-			// alert.showAndWait();
-			// }
 		}
 	}
 

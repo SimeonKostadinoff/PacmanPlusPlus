@@ -51,12 +51,15 @@ public class MultiPlayerJoinScreen extends Screen {
 
 		pane.getChildren().addAll(title, separator, label, ip, join, back);
 	}
-
+	
+	/**
+	 * Try to join a game with the given inputed IP adress
+	 * @param text
+	 */
 	private void joinGame(final String text) {
 		if (text.isEmpty()) {
 			return;
 		}
-		// fire event to join a game
 		try {
 			game.joinGame(text);
 			game.switchToMultiPlayerLobby();

@@ -9,7 +9,12 @@ import javafx.scene.control.Separator;
 import main.java.event.Event;
 import main.java.event.arguments.GameSettingsChangedEventArgs;
 import main.java.event.listener.GameSettingsChangedEventListener;
-
+/**
+ * Screen for changing the settings of a multiplayer game
+ * 
+ * @author Rose Kirtley
+ *
+ */
 public class GameSettingsScreen extends Screen {
 
 	public Button returnButton;
@@ -48,6 +53,9 @@ public class GameSettingsScreen extends Screen {
 		return event;
 	}
 	
+	/**
+	 *Sets the new settings on returning to the lobby. 
+	 */
 	private void closeSettings(){
 		game.multiPlayerLobbyScreen.getMultiplayerSettings().setInitialPlayerLives(lives.getValue()-1);
 		game.multiPlayerLobbyScreen.getMultiplayerSettings().setAIPlayer(ai.isSelected());
@@ -71,6 +79,9 @@ public class GameSettingsScreen extends Screen {
 		
 	}
 	
+	/**
+	 * updates the values from the settings object
+	 */
 	public void update() {
 		ai.setSelected(game.multiPlayerLobbyScreen.getMultiplayerSettings().getAIPlayer());
 	    lives.getSelectionModel().select(game.multiPlayerLobbyScreen.getMultiplayerSettings().getInitialPlayerLives());

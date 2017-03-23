@@ -159,6 +159,10 @@ public class GameUI extends Application implements GameInterface, LobbyStateChan
 		return onPlayerLeavingGame;
 	}
 
+	/**
+	 * setups up the screens
+	 * @param audioDisabled setups up disabled sounds if true
+	 */
 	private void setup(boolean audioDisabled) {
 		music = audioDisabled ? new DisabledMusic() : new DefaultMusic();
 		gameCommandService.getLocalGameCreatedEvent().addListener(music);
@@ -180,6 +184,10 @@ public class GameUI extends Application implements GameInterface, LobbyStateChan
 		
 	}
 
+	/**
+	 * Key press events to button selection
+	 * @param key
+	 */
 	private void sendMoveEvent(final KeyCode key) {
 		if (key == KeyCode.UP) {
 			currentScreen.changeSelection(true);
@@ -188,6 +196,9 @@ public class GameUI extends Application implements GameInterface, LobbyStateChan
 		}
 	}
 
+	/**
+	 * Sets up the settings button for the top right of the screen
+	 */
 	private void setUpSettingsButton() {
 
 		settings = new Button("Settings");
@@ -205,27 +216,43 @@ public class GameUI extends Application implements GameInterface, LobbyStateChan
 		launch(args);
 	}
 
+	/**
+	 * Sets the screen as that given
+	 * @param screen
+	 */
 	private void setScreen(final Screen screen) {
 		currentScreen = screen;
 		centerPane.getChildren().remove(0, centerPane.getChildren().size());
 		centerPane.getChildren().add(screen.getPane());
 	}
 	
+	/**
+	 * Centres screen
+	 */
 	private void adjustScreenPosition(){
 		Rectangle2D primScreenBounds = javafx.stage.Screen.getPrimary().getVisualBounds();
 		thisStage.setX((primScreenBounds.getWidth() - thisStage.getWidth()) / 2);
 		thisStage.setY((primScreenBounds.getHeight() - thisStage.getHeight()) / 2);
 	}
 	
+	/**
+	 * Shows the game setting screen for multiplayer games 
+	 */
 	public void showGameSettingsScreen(){
 		gameSettingsScreen.update();
 		centerPane.getChildren().add(gameSettingsScreen.getPane());
 	}
 	
+	/**
+	 * Removes the game setting screen for multiplayer games
+	 */
 	public void removeGameSettingsScreen(){
 		centerPane.getChildren().remove(gameSettingsScreen.getPane());
 	}
-
+	
+	/**
+	 * Sets the screen to the main menu (resets the scene as ui)
+	 */
 	public void switchToMenu() {
 		thisStage.setScene(uiScene);
 		adjustScreenPosition();
@@ -236,6 +263,9 @@ public class GameUI extends Application implements GameInterface, LobbyStateChan
 		settings.setDisable(false);
 	}
 
+	/**
+	 * Sets the screen to the login screen
+	 */
 	public void switchToLogIn() {
 		final Label label = new Label("PacMan++");
 		label.getStyleClass().add("labelStyle");
@@ -243,35 +273,59 @@ public class GameUI extends Application implements GameInterface, LobbyStateChan
 		setScreen(logInScreen);
 	}
 
+	/**
+	 * Sets the screen to the client settings (audio)
+	 */
 	public void switchToSettingsMenu() {
 		thisStage.setScene(settingsSceneMenu);
 	}
 
+	/**
+	 * Sets the scene back to the game
+	 */
 	public void returnBackFromGame() {
 		thisStage.setScene(gameScene);
 	}
 	
+	/**
+	 * Sets the screen back to the menu (uiScene)
+	 */
 	public void returnBackFromMenu(){
 		thisStage.setScene(uiScene);
 	}
 
+	/**
+	 * Sets the screen to the single player lobby
+	 */
 	public void switchToSinglePlayerLobby() {
 		setScreen(singlePlayerLobbyScreen);
 	}
 
+	/**
+	 * Sets the screen to the multiplayer lobby
+	 */
 	public void switchToMultiPlayerLobby() {
 		setScreen(multiPlayerLobbyScreen);
 
 	}
 
+	/**
+	 * Sets the screen to the multiplayer option screen
+	 */
 	public void switchToMultiPlayerOption() {
 		setScreen(multiPlayerOptionScreen);
 	}
 
+	/**
+	 * Sets the screen to the multiplayer join screen
+	 */
 	public void switchToMultiPlayerJoin() {
 		setScreen(multiPlayerJoinScreen);
 	}
 	
+	/**
+	 * Sets the scene to the help scene (not ui scene any more)
+	 */
 	public void switchToHelp(){
 		final Label label = new Label("PacMan++ " + getName());
 		label.getStyleClass().add("labelStyle");
@@ -280,26 +334,47 @@ public class GameUI extends Application implements GameInterface, LobbyStateChan
 		adjustScreenPosition();
 	}
 
+	/**
+	 * Sets the scene to the client settings screen from the Game
+	 */
 	public void switchToSettingsGame(){
 		thisStage.setScene(settingsSceneGame);
 	}
 	
+	/**
+	 * Closes the game
+	 */
 	public void close() {
 		thisStage.close();
 	}
 
+	/**
+	 * returns the Game object
+	 * @return
+	 */
 	public Game getGame() {
 		return game;
 	}
 
+	/**
+	 * Sets the name of the client
+	 * @param name
+	 */
 	public void setName(final String name) {
 		this.name = name;
 	}
 
+	/**
+	 * Returns the name of the client
+	 * @return
+	 */
 	public String getName() {
 		return name;
 	}
 
+	/**
+	 * Starts a new pending multiplayer game (when in lobby screen, not an actual game)
+	 */
 	public void createNewPendingMultiPlayerGame() {
 		multiPlayerLobbyScreen.addNames();
 
@@ -337,17 +412,17 @@ public class GameUI extends Application implements GameInterface, LobbyStateChan
 
 		server.run();
 		try {
-			// really nasty cheap workaround to get around JavaFX being weird
 			Thread.sleep(100);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
 		client.run();
-		// create new lobby for a multiplayer game
 	}
 
-	// TODO move creation of client instance into GameCommandService at some
-	// point
+	/**
+	 *  Sets up client joining a game
+	 * @param gameIp
+	 */
 	public void joinGame(final String gameIp) {
 		final ClientInstance client = new ClientInstance(this, name, gameIp);
 
@@ -361,21 +436,31 @@ public class GameUI extends Application implements GameInterface, LobbyStateChan
 		client.getMultiplayerGameStartingEvent().addOneTimeListener(gameCommandService);
 
 		client.run();
-		// join game with ip
 	}
 
+	/**
+	 * Mutes music
+	 * @param bool
+	 */
 	public void muteMusic(final boolean bool) {
 		settingsScreenGame.selectMusic(bool);
 		settingsScreenMenu.selectMusic(bool);
 		music.setOn(bool);
 	}
 
+	/**
+	 * Mutes sound effects
+	 * @param bool
+	 */
 	public void muteSounds(final boolean bool) {
 		settingsScreenGame.selectSounds(bool);
 		settingsScreenMenu.selectSounds(bool);
 		sounds.setOn(bool);
 	}
 
+	/**
+	 * Deals with players joing and leaving the lobby
+	 */
 	@Override
 	public void onLobbyStateChanged(final LobbyChangedEventArgs args) {
 		if (args instanceof LobbyChangedEventArgs.LobbyPlayerLeftEventArgs) {
@@ -389,11 +474,17 @@ public class GameUI extends Application implements GameInterface, LobbyStateChan
 		}
 	}
 
+	/**
+	 * Sets the lobby for multiplayer game
+	 */
 	public void setLobby(final Lobby lobby) {
 		this.lobby = lobby;
 		lobby.getLobbyStateChangedEvent().addListener(this);
 	}
 
+	/**
+	 * Deals with new game created
+	 */
 	@Override
 	public void onGameCreated(final GameCreatedEventArgs args) {
 		if (args.getGame().getGameType() != GameType.MULTIPLAYER_SERVER) {
@@ -447,6 +538,9 @@ public class GameUI extends Application implements GameInterface, LobbyStateChan
 		}
 	}
 
+	/**
+	 * Count down for starting a multiplayer game
+	 */
 	public void timer(){
 		Platform.runLater(() -> {
 		centerPane.getChildren().add(timerLabel);
@@ -466,16 +560,25 @@ public class GameUI extends Application implements GameInterface, LobbyStateChan
 		});
 	}
 
+	/**
+	 * fires event for player leaving a game
+	 */
 	@Override
 	public void onPlayerLeavingGame() {
 		this.getOnPlayerLeavingGame().fire(null);
 	}
 
+	/**
+	 * Set game settings for whether playing against AI or not
+	 */
 	@Override
 	public void setAIPlayer(boolean ai) {
 		multiPlayerLobbyScreen.getMultiplayerSettings().setAIPlayer(ai);
 	}
 
+	/**
+	 * Set game settings for number of lives
+	 */
 	@Override
 	public void setLives(int lives) {
 		multiPlayerLobbyScreen.getMultiplayerSettings().setInitialPlayerLives(lives);		

@@ -105,6 +105,9 @@ public class MultiPlayerLobbyScreen extends Screen implements UserLeavingLobbyLi
 		return gameSettings;
 	}
 
+	/**
+	 * Start countdown
+	 */
 	private void play() {
 		thisClient = true;
 		getCountDownStartingListener().fire(null);
@@ -115,7 +118,6 @@ public class MultiPlayerLobbyScreen extends Screen implements UserLeavingLobbyLi
 	}
 
 	private void leaveGame() {
-		// fire event for leaving a multiplayer game
 		game.switchToMenu();
 		userLeavingLobbyEvent.fire(null);
 	}
